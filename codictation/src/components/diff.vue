@@ -106,15 +106,21 @@
               label="修改版本"
               width="300"
             >
-              <tamplate slot-scope="scope">
+              <template slot-scope="scope">
                 <span v-html="scope.row.diff"></span>
-              </tamplate>
+              </template>
             </el-table-column>
             <el-table-column
               prop="names"
               label="用户"
               width="300"
-            ></el-table-column>
+            >
+              <template slot-scope = "scope">
+                <span v-for="name in scope.row.names" :key="name">
+                  {{name + " "}}
+                </span>
+              </template>
+            </el-table-column>
           </el-table>
           <el-button @click="closeShow()">关闭</el-button>
           <el-pagination
@@ -763,8 +769,8 @@ export default {
       var words = this.dbList[s_index].words;
       this.tableData = words[index].diffs;
       for (var i = 0; i < this.tableData.length; i++) {
-        var unique_names = this.unique(this.tableData[i].names)
-        this.tableData[i].names = unique_names.join(", ");
+        this.tableData[i].names = this.unique(this.tableData[i].names)
+        // this.tableData[i].names = unique_names.join(", ");
       }
     },
     closeShow() {
